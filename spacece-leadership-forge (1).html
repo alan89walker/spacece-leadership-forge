@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpacECE Leadership Forge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --ink-soft: #3a3a3a;
+    --ink-muted: #777;
+    --cream: #faf8f4;
+    --warm: #f2ede4;
+    --accent: #c8410b;
+    --accent-light: #f0e8e2;
+    --accent-dark: #8f2d06;
+    --gold: #d4a843;
+    --teal: #1a6b6b;
+    --teal-light: #e4f0f0;
+    --border: #e0d8cc;
+    --white: #ffffff;
+    --nav-h: 68px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'DM Sans', sans-serif; background:var(--cream); color:var(--ink); line-height:1.7; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:999;
+    background: rgba(13,13,13,0.97);
+    backdrop-filter: blur(10px);
+    height: var(--nav-h);
+    display: flex; align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; width:100%;
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight:700;
+    color: #fff; text-decoration: none;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--gold); }
+  .nav-links {
+    display: flex; align-items: center; gap: 0.25rem;
+    margin-left: auto;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color:#fff; background: rgba(255,255,255,0.1); }
+  .nav-links a.active { color:#fff; background: rgba(200,65,11,0.35); }
+  .nav-links .dropdown { position: relative; }
+  .nav-links .dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    min-width: 160px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  }
+  .nav-links .dropdown:hover .dropdown-menu { display: block; }
+  .nav-links .dropdown-menu a {
+    display: block; border-radius:0; padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-cta {
+    background: var(--accent) !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    margin-left: 0.5rem;
+  }
+  .nav-cta:hover { background: var(--accent-dark) !important; }
+
+  /* ── PAGES ── */
+  .page { display: none; padding-top: var(--nav-h); min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ── HERO (HOME) ── */
+  .hero {
+    background: var(--ink);
+    min-height: calc(100vh - var(--nav-h));
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset:0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(200,65,11,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(212,168,67,0.1) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset:0; opacity: 0.04;
+    background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-inner {
+    position: relative; z-index:2;
+    max-width: 1200px; margin:0 auto; padding: 6rem 2rem 5rem;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(200,65,11,0.2);
+    border: 1px solid rgba(200,65,11,0.4);
+    color: #f0a080;
+    font-size: 0.75rem; font-weight:600; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 2rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900; line-height: 1.02;
+    color: #fff; margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    font-size: 1.15rem; color: rgba(255,255,255,0.6);
+    max-width: 600px; margin-bottom: 1.5rem; line-height: 1.75;
+    font-weight: 300;
+  }
+  .hero-sub strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+  .hero-body {
+    font-size: 0.9rem; color: rgba(255,255,255,0.4);
+    max-width: 560px; margin-bottom: 3rem; line-height: 1.8;
+    font-style: italic;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 0.85rem 2rem; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 600;
+    text-decoration: none; display: inline-block;
+    transition: all 0.2s; border: none; cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: rgba(255,255,255,0.8);
+    padding: 0.85rem 2rem; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; display: inline-block;
+    transition: all 0.2s;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.5); color:#fff; }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 5rem; padding-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+  }
+  .stat-num {
+    font-family:'Playfair Display',serif; font-size: 2.5rem; font-weight:700;
+    color: var(--gold); line-height:1;
+  }
+  .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-top:0.3rem; letter-spacing:0.05em; text-transform: uppercase; }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1200px; margin:0 auto; }
+  .section-label {
+    font-size: 0.72rem; font-weight:700; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--ink); margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  h2.section-title.light { color: #fff; }
+  .section-intro { font-size: 1.05rem; color: var(--ink-soft); max-width: 680px; line-height:1.8; }
+  .section-intro.light { color: rgba(255,255,255,0.65); }
+
+  /* ── PILLARS SECTION ── */
+  .pillars-section { background: var(--ink); }
+  .pillars-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px; margin-top: 4rem;
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden;
+  }
+  .pillar {
+    background: #141414; padding: 3rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .pillar:hover { background: #1a1a1a; }
+  .pillar:last-child { border-right: none; }
+  .pillar-num {
+    font-family:'Playfair Display',serif; font-size: 5rem; font-weight:900;
+    color: rgba(255,255,255,0.04); position: absolute; top:-0.5rem; right:1rem;
+    line-height:1; pointer-events:none;
+  }
+  .pillar-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items:center; justify-content:center;
+    font-size: 1.4rem; margin-bottom: 1.5rem;
+  }
+  .pillar-icon.orange { background: rgba(200,65,11,0.2); }
+  .pillar-icon.gold { background: rgba(212,168,67,0.2); }
+  .pillar-icon.teal { background: rgba(26,107,107,0.3); }
+  .pillar h3 {
+    font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700;
+    color:#fff; margin-bottom:1rem;
+  }
+  .pillar p { font-size:0.9rem; color:rgba(255,255,255,0.5); line-height:1.8; }
+  .pillar-list { list-style:none; margin-top:1.2rem; }
+  .pillar-list li {
+    font-size:0.85rem; color:rgba(255,255,255,0.4); padding: 0.3rem 0;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .pillar-list li::before { content:'→'; color:var(--accent); font-size:0.75rem; }
+
+  /* ── WHAT IS SECTION ── */
+  .what-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin-top: 3rem;
+  }
+  .what-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem;
+  }
+  .what-card h4 {
+    font-size: 0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em;
+    color: var(--accent); margin-bottom: 0.75rem;
+  }
+  .what-card p { font-size: 0.92rem; color: var(--ink-soft); line-height:1.75; }
+  .what-card .big { font-size: 2rem; font-weight:700; font-family:'Playfair Display',serif; color:var(--ink); line-height:1; margin-bottom:0.5rem; }
+
+  /* ── PROGRAMS PAGE ── */
+  .page-hero {
+    background: var(--ink); padding: 5rem 2rem 4rem;
+    text-align: center;
+  }
+  .page-hero h1 {
+    font-family:'Playfair Display',serif; font-size: clamp(2.2rem,5vw,3.8rem);
+    font-weight:900; color:#fff; margin-bottom:1rem; letter-spacing:-0.02em;
+  }
+  .page-hero p { color:rgba(255,255,255,0.55); max-width:600px; margin:0 auto; font-size:1rem; line-height:1.8; }
+  .programs-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .prog-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 14px; padding: 2rem; position:relative; overflow:hidden;
+    transition: all 0.25s; cursor:default;
+  }
+  .prog-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(200,65,11,0.1); }
+  .prog-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    opacity:0; transition: opacity 0.25s;
+  }
+  .prog-card:hover::before { opacity:1; }
+  .prog-tag {
+    display:inline-block; font-size:0.7rem; font-weight:700; letter-spacing:0.12em;
+    text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:100px;
+    margin-bottom:1rem;
+  }
+  .prog-tag.tech { background:var(--teal-light); color:var(--teal); }
+  .prog-tag.nontech { background:var(--accent-light); color:var(--accent-dark); }
+  .prog-card h3 {
+    font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700;
+    color:var(--ink); margin-bottom:0.75rem;
+  }
+  .prog-card p { font-size:0.875rem; color:var(--ink-soft); line-height:1.75; margin-bottom:1.25rem; }
+  .prog-detail { font-size:0.8rem; color:var(--ink-muted); }
+  .prog-detail strong { color:var(--ink-soft); font-weight:600; }
+  .prog-highlight {
+    margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border);
+  }
+  .prog-highlight h5 { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--ink-muted); margin-bottom:0.5rem; }
+  .prog-highlight ul { list-style:none; }
+  .prog-highlight ul li {
+    font-size:0.82rem; color:var(--ink-soft); padding:0.2rem 0;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .prog-highlight ul li::before { content:'◆'; color:var(--accent); font-size:0.5rem; flex-shrink:0; }
+  .duration-badges { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem; }
+  .duration-badge {
+    font-size:0.72rem; font-weight:600; padding:0.25rem 0.65rem;
+    border-radius:100px; background:var(--warm); color:var(--ink-soft);
+    border:1px solid var(--border);
+  }
+
+  /* ── DETAILS PAGES ── */
+  .track-intro { background:var(--ink); padding: 5rem 2rem 4rem; }
+  .track-intro h1 {
+    font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem);
+    font-weight:900; color:#fff; line-height:1.1; margin-bottom:1.5rem;
+    letter-spacing:-0.02em; max-width:700px;
+  }
+  .track-intro p { color:rgba(255,255,255,0.6); max-width:660px; font-size:0.97rem; line-height:1.85; margin-bottom:0.75rem; }
+  .roles-section { background:var(--cream); padding:5rem 2rem; }
+  .role-block {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:16px; padding:2.5rem; margin-bottom:2rem;
+    display:grid; grid-template-columns:1fr 1fr; gap:2rem;
+  }
+  .role-block-header { grid-column: 1/-1; }
+  .role-num {
+    font-size:0.7rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:0.5rem;
+  }
+  .role-block h2 {
+    font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:700;
+    color:var(--ink); margin-bottom:1rem; letter-spacing:-0.01em;
+  }
+  .role-block h2 span { color:var(--accent); }
+  .role-overview { grid-column:1/-1; font-size:0.93rem; color:var(--ink-soft); line-height:1.8; }
+  .role-col h4 {
+    font-size:0.72rem; text-transform:uppercase; letter-spacing:0.15em;
+    color:var(--ink-muted); font-weight:700; margin-bottom:0.75rem;
+    padding-bottom:0.5rem; border-bottom:2px solid var(--accent);
+  }
+  .role-col ul { list-style:none; }
+  .role-col ul li {
+    font-size:0.875rem; color:var(--ink-soft); padding:0.35rem 0;
+    border-bottom:1px solid var(--warm); display:flex; gap:0.6rem; align-items:flex-start;
+  }
+  .role-col ul li::before { content:'▸'; color:var(--accent); font-size:0.75rem; margin-top:0.15rem; flex-shrink:0; }
+  .learning-path {
+    grid-column:1/-1;
+    display:flex; gap:0; margin-top:0.5rem;
+    background:var(--warm); border-radius:10px; overflow:hidden;
+    border:1px solid var(--border);
+  }
+  .lp-stage {
+    flex:1; padding:1rem 1.25rem; position:relative;
+    border-right:1px solid var(--border);
+  }
+  .lp-stage:last-child { border-right:none; }
+  .lp-stage-num {
+    font-size:0.65rem; font-weight:700; letter-spacing:0.15em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:0.3rem;
+  }
+  .lp-stage p { font-size:0.8rem; color:var(--ink-soft); line-height:1.5; }
+  .eligibility-bar {
+    grid-column:1/-1; background:var(--teal-light);
+    border-radius:10px; padding:1.25rem 1.5rem;
+    border-left:4px solid var(--teal);
+    display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;
+  }
+  .eligibility-bar h5 {
+    font-size:0.72rem; text-transform:uppercase; letter-spacing:0.15em;
+    color:var(--teal); font-weight:700; margin-bottom:0.5rem;
+  }
+  .eligibility-bar ul { list-style:none; flex:1; }
+  .eligibility-bar ul li {
+    font-size:0.85rem; color:var(--ink-soft); padding:0.2rem 0;
+    display:flex; gap:0.5rem; align-items:center;
+  }
+  .eligibility-bar ul li::before { content:'✓'; color:var(--teal); font-weight:700; font-size:0.8rem; }
+  .apply-bar {
+    grid-column:1/-1; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:1rem;
+  }
+  .apply-bar .duration-info { font-size:0.85rem; color:var(--ink-muted); }
+  .apply-bar .duration-info strong { color:var(--ink); }
+  .btn-sm {
+    background:var(--accent); color:#fff; text-decoration:none;
+    padding:0.6rem 1.5rem; border-radius:8px; font-size:0.85rem;
+    font-weight:600; display:inline-block; transition:all 0.2s;
+  }
+  .btn-sm:hover { background:var(--accent-dark); }
+
+  /* ── APPLY PAGE ── */
+  .apply-hero {
+    background:var(--ink); min-height:calc(100vh - var(--nav-h));
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:4rem 2rem;
+    position:relative; overflow:hidden;
+  }
+  .apply-hero::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,65,11,0.15) 0%, transparent 70%);
+  }
+  .apply-hero-inner { position:relative; z-index:2; max-width:720px; }
+  .apply-hero h1 {
+    font-family:'Playfair Display',serif; font-size:clamp(3rem,7vw,5.5rem);
+    font-weight:900; color:#fff; line-height:1.05; margin-bottom:1.5rem;
+    letter-spacing:-0.03em;
+  }
+  .apply-hero h1 em { color:var(--gold); font-style:normal; }
+  .apply-hero .sub {
+    font-size:1.1rem; color:rgba(255,255,255,0.55); line-height:1.8;
+    margin-bottom:0.75rem;
+  }
+  .apply-hero .note {
+    font-size:0.85rem; color:rgba(255,255,255,0.35); margin-bottom:3rem;
+    font-style:italic;
+  }
+  .apply-hero .btn-primary { font-size:1rem; padding:1rem 2.5rem; }
+  .process-steps {
+    background:var(--warm); padding:5rem 2rem;
+  }
+  .steps-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:0; margin-top:3rem;
+    border:1px solid var(--border); border-radius:14px; overflow:hidden;
+  }
+  .step {
+    padding:2rem 1.75rem; background:var(--white);
+    border-right:1px solid var(--border);
+    position:relative;
+  }
+  .step:last-child { border-right:none; }
+  .step-num {
+    font-family:'Playfair Display',serif; font-size:3rem; font-weight:900;
+    color:var(--accent); line-height:1; margin-bottom:0.75rem; opacity:0.3;
+  }
+  .step h4 { font-size:0.95rem; font-weight:600; color:var(--ink); margin-bottom:0.5rem; }
+  .step p { font-size:0.82rem; color:var(--ink-muted); line-height:1.7; }
+
+  /* ── RESOURCES PAGE ── */
+  .resources-section { padding:5rem 2rem; background:var(--cream); }
+  .resources-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:1.5rem; margin-top:3rem;
+  }
+  .resource-card {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:14px; padding:2rem; overflow:hidden; position:relative;
+  }
+  .resource-card::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:4px;
+  }
+  .resource-card.web::after { background:linear-gradient(90deg,#378add,#1a6b6b); }
+  .resource-card.design::after { background:linear-gradient(90deg,var(--gold),#e07b40); }
+  .resource-card.marketing::after { background:linear-gradient(90deg,var(--accent),var(--gold)); }
+  .resource-card.data::after { background:linear-gradient(90deg,#639922,#1a6b6b); }
+  .resource-icon {
+    width:52px; height:52px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; margin-bottom:1.25rem;
+  }
+  .resource-card h3 {
+    font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700;
+    color:var(--ink); margin-bottom:0.75rem;
+  }
+  .resource-card .desc { font-size:0.875rem; color:var(--ink-soft); line-height:1.75; margin-bottom:1.25rem; }
+  .resource-list h5 {
+    font-size:0.7rem; text-transform:uppercase; letter-spacing:0.15em;
+    color:var(--ink-muted); font-weight:700; margin-bottom:0.5rem; margin-top:0.75rem;
+  }
+  .resource-list ul { list-style:none; }
+  .resource-list ul li {
+    font-size:0.82rem; color:var(--ink-soft); padding:0.25rem 0;
+    display:flex; gap:0.5rem; align-items:center;
+  }
+  .resource-list ul li::before { content:'→'; color:var(--accent); font-size:0.75rem; }
+  .resource-quote {
+    background:var(--ink); border-radius:14px; padding:3rem;
+    text-align:center; margin-top:4rem;
+  }
+  .resource-quote blockquote {
+    font-family:'Playfair Display',serif; font-size:clamp(1.2rem,2.5vw,1.8rem);
+    font-weight:700; color:#fff; line-height:1.5; font-style:italic;
+    max-width:700px; margin:0 auto 1rem;
+  }
+  .resource-quote cite { font-size:0.85rem; color:rgba(255,255,255,0.4); font-style:normal; }
+
+  /* ── CONTACT PAGE ── */
+  .contact-section { padding:5rem 2rem; background:var(--cream); }
+  .contact-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-top:3rem;
+    align-items:start;
+  }
+  .contact-info-block {
+    background:var(--ink); border-radius:16px; padding:3rem;
+    color:#fff;
+  }
+  .contact-info-block h3 {
+    font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700;
+    color:#fff; margin-bottom:2rem;
+  }
+  .contact-item {
+    display:flex; gap:1rem; align-items:flex-start; margin-bottom:1.5rem;
+    padding-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .contact-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .contact-item-icon {
+    width:40px; height:40px; background:rgba(200,65,11,0.25);
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-size:1rem; flex-shrink:0;
+  }
+  .contact-item-text h5 { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.15em; color:rgba(255,255,255,0.4); margin-bottom:0.3rem; }
+  .contact-item-text p { font-size:0.92rem; color:rgba(255,255,255,0.85); }
+  .contact-form-block {
+    background:var(--white); border:1px solid var(--border);
+    border-radius:16px; padding:2.5rem;
+  }
+  .contact-form-block h3 {
+    font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700;
+    color:var(--ink); margin-bottom:1.75rem;
+  }
+  .form-row { margin-bottom:1.25rem; }
+  .form-row label {
+    display:block; font-size:0.78rem; font-weight:600; text-transform:uppercase;
+    letter-spacing:0.1em; color:var(--ink-muted); margin-bottom:0.4rem;
+  }
+  .form-row input, .form-row select, .form-row textarea {
+    width:100%; padding:0.75rem 1rem;
+    border:1px solid var(--border); border-radius:8px;
+    font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink);
+    background:var(--cream); outline:none; transition:border-color 0.2s;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+    border-color:var(--accent);
+  }
+  .form-row textarea { resize:vertical; min-height:120px; }
+  .form-submit {
+    width:100%; background:var(--accent); color:#fff;
+    border:none; padding:0.9rem; border-radius:8px;
+    font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600;
+    cursor:pointer; transition:background 0.2s; margin-top:0.5rem;
+  }
+  .form-submit:hover { background:var(--accent-dark); }
+  .social-links { display:flex; gap:1rem; margin-top:2rem; }
+  .social-link {
+    display:flex; align-items:center; gap:0.5rem;
+    background:rgba(255,255,255,0.1); padding:0.6rem 1.2rem;
+    border-radius:8px; font-size:0.85rem; color:rgba(255,255,255,0.75);
+    text-decoration:none; transition:background 0.2s; border:1px solid rgba(255,255,255,0.1);
+  }
+  .social-link:hover { background:rgba(255,255,255,0.15); color:#fff; }
+
+  /* ── FOOTER ── */
+  footer {
+    background:var(--ink); color:rgba(255,255,255,0.4);
+    padding:3rem 2rem; text-align:center;
+  }
+  .footer-inner { max-width:1200px; margin:0 auto; }
+  .footer-logo {
+    font-family:'Playfair Display',serif; font-size:1.2rem;
+    color:#fff; margin-bottom:0.5rem; font-weight:700;
+  }
+  .footer-logo span { color:var(--gold); }
+  .footer-tagline { font-size:0.8rem; margin-bottom:2rem; }
+  .footer-links {
+    display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap;
+    margin-bottom:2rem;
+  }
+  .footer-links a {
+    color:rgba(255,255,255,0.5); text-decoration:none; font-size:0.82rem;
+    transition:color 0.2s;
+  }
+  .footer-links a:hover { color:#fff; }
+  .footer-divider { border:none; border-top:1px solid rgba(255,255,255,0.08); margin:2rem 0; }
+  .footer-copy { font-size:0.78rem; }
+
+  /* ── FILTERS ── */
+  .filter-bar {
+    display:flex; gap:0.5rem; margin-bottom:2rem; flex-wrap:wrap;
+    padding:1.5rem 2rem 0;
+    max-width:1200px; margin-left:auto; margin-right:auto;
+  }
+  .filter-btn {
+    background:var(--white); border:1px solid var(--border);
+    color:var(--ink-soft); padding:0.45rem 1.1rem;
+    border-radius:100px; font-size:0.82rem; font-weight:500;
+    cursor:pointer; transition:all 0.2s; font-family:'DM Sans',sans-serif;
+  }
+  .filter-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .filter-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:768px) {
+    .what-grid { grid-template-columns:1fr; }
+    .contact-grid { grid-template-columns:1fr; }
+    .role-block { grid-template-columns:1fr; }
+    .learning-path { flex-direction:column; }
+    .lp-stage { border-right:none; border-bottom:1px solid var(--border); }
+    .nav-links { display:none; }
+    .hero-stats { gap:1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="showPage('home')">SpacECE <span>Forge</span></a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+      <li><a href="#" onclick="showPage('programs')" id="nav-programs">Internship Programs</a></li>
+      <li class="dropdown">
+        <a href="#" onclick="showPage('tech')" id="nav-details">Internship Details ▾</a>
+        <div class="dropdown-menu">
+          <a href="#" onclick="showPage('tech')">Tech</a>
+          <a href="#" onclick="showPage('nontech')">Non-Tech</a>
+        </div>
+      </li>
+      <li><a href="#" onclick="showPage('apply')" id="nav-apply">Apply Here</a></li>
+      <li><a href="#" onclick="showPage('resources')" id="nav-resources">Learning Resources</a></li>
+      <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div class="hero-tag">🔥 Youth Leadership Development Program</div>
+      <h1>Don't just intern.<br><em>Lead.</em></h1>
+      <p class="hero-sub">
+        <strong>Forged in IIMs, IITs & Global Universities. Built to Solve.</strong><br>
+        A leadership development program designed to go beyond traditional internships.
+      </p>
+      <p class="hero-body">
+        The environment is virtual, but the challenges are real.<br>
+        The outcome is not just experience — it is transformation.
+      </p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary" onclick="showPage('programs')">Enter the Leadership Forge</a>
+        <a href="#" class="btn-outline" onclick="showPage('tech')">View Live Projects</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">16+</div>
+          <div class="stat-label">Active Roles</div>
+        </div>
+        <div>
+          <div class="stat-num">12mo</div>
+          <div class="stat-label">Max Duration</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Virtual & Full-Time</div>
+        </div>
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label">Growth Pillars</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mission -->
+  <section style="background:var(--warm);">
+    <div class="container">
+      <div class="section-label">Our Mission</div>
+      <h2 class="section-title">We Don't Need Task Completers.<br>We Need System Changers.</h2>
+      <p class="section-intro">Most internships are designed to test patience. This program is designed to test judgment, resilience, and the ability to bring clarity to uncertain situations.</p>
+      <p class="section-intro" style="margin-top:1rem;">At SpacECE India Foundation, the focus is not just on completing assigned work, but on developing individuals who can think independently and act decisively.</p>
+      <div class="what-grid" style="margin-top:3rem;">
+        <div class="what-card">
+          <h4>What is this internship?</h4>
+          <p>A leadership-focused internship where real-world problems are used to build decision-making ability and ownership. Your role may belong to HR, technology, management, or design — but the real objective is leadership development.</p>
+        </div>
+        <div class="what-card">
+          <h4>Duration</h4>
+          <div class="big">1–12</div>
+          <p>Months, based on performance and progression. Short-term, mid-term, and long-term tracks available across all roles.</p>
+        </div>
+        <div class="what-card">
+          <h4>Mode</h4>
+          <p style="font-size:1.5rem;font-weight:700;font-family:'Playfair Display',serif;color:var(--ink);margin-bottom:0.5rem;">Fully Virtual</p>
+          <p>Full-time engagement. Your laptop, your space — but the accountability is 100% real.</p>
+        </div>
+        <div class="what-card">
+          <h4>What you gain</h4>
+          <p>Real project experience · Exposure to cross-functional work · Leadership mindset development · System thinking ability · Pre-placement offer opportunities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="pillars-section">
+    <div class="container">
+      <div class="section-label" style="color:var(--gold);">The Growth Framework</div>
+      <h2 class="section-title light">The Three Pillars That<br>Define Your Growth</h2>
+      <p class="section-intro light">Every intern at SpacECE is developed through three foundational pillars that shape how you think and perform.</p>
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div class="pillar-icon orange">🧩</div>
+          <h3>Problem Solver</h3>
+          <p>You will learn how to break down ambiguous and complex problems into structured, actionable steps. Instead of waiting for clarity, you will create it.</p>
+          <ul class="pillar-list">
+            <li>Break down complex challenges</li>
+            <li>Structure ambiguous situations</li>
+            <li>Create clarity from confusion</li>
+          </ul>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div class="pillar-icon gold">⚡</div>
+          <h3>Change Agent</h3>
+          <p>You will develop the ability to influence processes and improve systems across teams — even without formal authority. Leadership begins where comfort ends.</p>
+          <ul class="pillar-list">
+            <li>Influence without authority</li>
+            <li>Improve systems across teams</li>
+            <li>Drive change from within</li>
+          </ul>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div class="pillar-icon teal">📊</div>
+          <h3>Informed Professional</h3>
+          <p>You will learn to make decisions backed by data — using metrics such as KPIs, ROI, and performance analysis to justify your actions.</p>
+          <ul class="pillar-list">
+            <li>Data-driven decision making</li>
+            <li>KPI & ROI analysis</li>
+            <li>Impact over task completion</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">SpacECE <span>Leadership Forge</span></div>
+      <div class="footer-tagline">Youth Leadership × Real-World Learning</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('programs')">Internship Programs</a>
+        <a href="#" onclick="showPage('tech')">Internship Details</a>
+        <a href="#" onclick="showPage('apply')">Apply Here</a>
+        <a href="#" onclick="showPage('resources')">Learning Resources</a>
+        <a href="#" onclick="showPage('contact')">Contact Us</a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copy">© 2026 SpacECE India Foundation. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: INTERNSHIP PROGRAMS
+══════════════════════════════════════════ -->
+<div id="page-programs" class="page">
+  <div class="page-hero">
+    <div class="section-label" style="color:var(--gold);">All Roles</div>
+    <h1>Internship Programs</h1>
+    <p>From building products to crafting strategy — choose a role that aligns with your strengths. Every program is designed around real impact, not busy work.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRoles('all',this)">All Roles</button>
+    <button class="filter-btn" onclick="filterRoles('tech',this)">Technical</button>
+    <button class="filter-btn" onclick="filterRoles('nontech',this)">Non-Technical</button>
+  </div>
+
+  <section style="padding:2rem 2rem 5rem;">
+    <div class="container">
+      <div class="programs-grid" id="programs-grid">
+
+        <!-- TECH ROLES -->
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>PHP Developer Intern</h3>
+          <p>Work on backend systems that power real-world applications. Understand data flows through systems, how APIs connect services, and how scalable server-side solutions are built.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real backend logic, not dummy projects</li>
+              <li>Exposure to database-driven systems</li>
+              <li>Contribute to live platforms</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>Web Development Intern</h3>
+          <p>Build responsive and interactive websites used in real environments. Understand how design, structure, and functionality come together to create user-friendly web experiences.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real project exposure instead of static assignments</li>
+              <li>Focus on performance, responsiveness, usability</li>
+              <li>Frontend connects with backend</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>MERN Stack Developer Intern</h3>
+          <p>Complete exposure to full-stack development — working across frontend, backend, and database layers. Designed for those who want to understand how entire applications are built and deployed.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>End-to-end application development</li>
+              <li>Real-world full-stack workflows</li>
+              <li>Problem-solving and system design focus</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 2–4 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>Laravel Developer Intern</h3>
+          <p>Backend development using a structured framework that emphasizes clean architecture and efficient workflows. Focuses on building secure and scalable systems using industry practices.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Framework-based development experience</li>
+              <li>Structured coding practices</li>
+              <li>Real backend system exposure</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 2–4 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>Android Developer Intern</h3>
+          <p>Build mobile applications designed for real users. Learn how mobile systems function, how user interaction is handled, and how apps are optimized for real-world use.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real app development experience</li>
+              <li>User-centric design focus</li>
+              <li>Mobile performance optimization</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>Python Developer Intern</h3>
+          <p>Work on automation, backend systems, and scripting. Ideal for understanding how programming can be applied to solve real-world problems efficiently.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Practical problem-solving using Python</li>
+              <li>Automation and backend logic exposure</li>
+              <li>Flexible application across domains</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>Python & Data Science Intern</h3>
+          <p>Combine programming with data analysis to understand patterns, trends, and insights. Focus on data-driven decision-making and analytical thinking.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Hands-on data analysis</li>
+              <li>Exposure to real datasets</li>
+              <li>Insight-driven decision making</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 2–4 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>Data Analyst Intern</h3>
+          <p>Work with structured data to generate insights that support strategic decisions. Focus on understanding trends, interpreting data, and presenting meaningful outcomes.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real-world data handling</li>
+              <li>Focus on insights, not just numbers</li>
+              <li>Decision-making support</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>UI/UX Design Intern</h3>
+          <p>Design intuitive and user-friendly interfaces that improve how users interact with systems. Focus on usability, layout, and user behavior research.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real design application</li>
+              <li>User experience focus</li>
+              <li>Visual + functional thinking</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–2 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="tech">
+          <span class="prog-tag tech">Technical</span>
+          <h3>QA (Quality Assurance) Intern</h3>
+          <p>Ensure applications meet quality standards by testing functionality, identifying issues, and improving system performance. Builds attention to detail and structured thinking.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Focus on system reliability</li>
+              <li>Real testing environments</li>
+              <li>Product quality lifecycle</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–2 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <!-- NON-TECH ROLES -->
+        <div class="prog-card" data-track="nontech">
+          <span class="prog-tag nontech">Non-Technical</span>
+          <h3>Social Media Management Intern</h3>
+          <p>Build and manage digital presence across platforms. Focus on content strategy, audience engagement, and growth metrics across all major platforms.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real campaign exposure</li>
+              <li>Growth-focused thinking</li>
+              <li>Platform-based strategy</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="nontech">
+          <span class="prog-tag nontech">Non-Technical</span>
+          <h3>Video Editing Intern</h3>
+          <p>Edit and produce engaging video content for different platforms. Focus on storytelling, transitions, and visual presentation across YouTube and social channels.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real media content creation</li>
+              <li>Storytelling focus</li>
+              <li>Platform-based editing</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–2 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="nontech">
+          <span class="prog-tag nontech">Non-Technical</span>
+          <h3>Graphics Design Intern</h3>
+          <p>Create visual content for branding and communication. Focus on creativity, visual consistency, and campaign-based design work across print and digital media.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real branding work</li>
+              <li>Creative freedom</li>
+              <li>Campaign-based design</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–2 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="nontech">
+          <span class="prog-tag nontech">Non-Technical</span>
+          <h3>YouTube Intern</h3>
+          <p>Work on growing and managing a YouTube channel through content planning, optimization, and analytics-driven decisions for audience development.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Channel growth strategy</li>
+              <li>Content lifecycle understanding</li>
+              <li>Analytics-driven decisions</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="nontech">
+          <span class="prog-tag nontech">Non-Technical</span>
+          <h3>Business Analyst Intern</h3>
+          <p>Analyze business processes and identify areas for improvement. Focus on strategy, operational efficiency, and data-backed decision making across functions.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Strategic thinking</li>
+              <li>Process optimization</li>
+              <li>Business understanding</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="nontech">
+          <span class="prog-tag nontech">Non-Technical</span>
+          <h3>Project Management Intern</h3>
+          <p>Work on planning, executing, and tracking projects. Focus on team coordination, workflow efficiency, and delivering outcomes on time and within scope.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Real project tracking</li>
+              <li>Team coordination</li>
+              <li>Process improvement</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–3 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+        <div class="prog-card" data-track="nontech">
+          <span class="prog-tag nontech">Non-Technical</span>
+          <h3>Legal Intern</h3>
+          <p>Assist in legal documentation, compliance, and research. Focus on understanding organizational legal frameworks and statutory requirements.</p>
+          <div class="prog-highlight">
+            <h5>What makes this unique</h5>
+            <ul>
+              <li>Legal exposure in NGO context</li>
+              <li>Compliance understanding</li>
+              <li>Research-based work</li>
+            </ul>
+          </div>
+          <div class="duration-badges">
+            <span class="duration-badge">Short: 1–2 months</span>
+            <span class="duration-badge">Mid: 6–12 months</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">SpacECE <span>Leadership Forge</span></div>
+      <div class="footer-tagline">Youth Leadership × Real-World Learning · Helping students become problem solvers, change agents, and informed professionals.</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('programs')">Internship Programs</a>
+        <a href="#" onclick="showPage('tech')">Tech</a>
+        <a href="#" onclick="showPage('nontech')">Non-Tech</a>
+        <a href="#" onclick="showPage('apply')">Apply Here</a>
+        <a href="#" onclick="showPage('contact')">Contact Us</a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copy">© 2026 SpacECE India Foundation. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: TECH DETAILS
+══════════════════════════════════════════ -->
+<div id="page-tech" class="page">
+  <div class="track-intro">
+    <div class="container">
+      <div class="section-label" style="color:var(--gold);">Technical Track</div>
+      <h1>Build Solutions.<br>Not Just Code.</h1>
+      <p>Step into a technical internship where you don't just learn tools — you use them to solve real-world problems.</p>
+      <p>From web development to AI/ML, every role is designed to push your thinking, sharpen your skills, and help you build systems that actually work.</p>
+      <p style="color:rgba(255,255,255,0.4);font-style:italic;margin-top:1rem;">You won't just complete tasks. You'll build, test, improve, and deliver.</p>
+    </div>
+  </div>
+
+  <section class="roles-section">
+    <div class="container">
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 01 · Technical Track</div>
+          <h2>Web <span>Development</span></h2>
+          <p class="role-overview">Focuses on building responsive, functional, and user-focused web applications. Interns will work on real-world features where structure, performance, and usability matter — not just aesthetic layouts.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Develop web pages and components</li>
+            <li>Work on frontend structure and styling</li>
+            <li>Integrate basic functionality</li>
+            <li>Improve performance and responsiveness</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>HTML, CSS, JavaScript</li>
+            <li>React (if applicable)</li>
+            <li>Git / GitHub</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Basic knowledge of HTML/CSS</li>
+            <li>Interest in web development</li>
+            <li>Willingness to learn</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand web fundamentals</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Build UI components</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Add functionality</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Optimize and improve</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 02 · Technical Track</div>
+          <h2>App <span>Development</span></h2>
+          <p class="role-overview">Focuses on building mobile applications that solve real-world problems with a focus on usability and performance. Learn how mobile systems function from the ground up.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Develop mobile app features</li>
+            <li>Work on UI flows and screens</li>
+            <li>Test and debug applications</li>
+            <li>Improve app performance</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Android Studio</li>
+            <li>Java / Kotlin</li>
+            <li>APIs and REST services</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Basic programming knowledge</li>
+            <li>Interest in mobile apps</li>
+            <li>Problem-solving mindset</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand app structure</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Build UI screens</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Add functionality</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Test and optimize</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 03 · Technical Track</div>
+          <h2>UI/UX <span>Design</span></h2>
+          <p class="role-overview">Focuses on designing intuitive interfaces and improving user experience across digital platforms. Every design decision must be grounded in user needs and system logic.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Create wireframes and prototypes</li>
+            <li>Design user interfaces</li>
+            <li>Improve user journeys</li>
+            <li>Work on usability improvements</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Figma</li>
+            <li>Adobe XD</li>
+            <li>Canva</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Interest in design and UX</li>
+            <li>Creativity and attention to detail</li>
+            <li>Basic tool familiarity (optional)</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand user needs</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Create wireframes</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Design interfaces</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Improve experience</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–2 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 04 · Technical Track</div>
+          <h2>Graphic <span>Design</span></h2>
+          <p class="role-overview">Focuses on creating visual content that communicates ideas effectively and supports branding efforts across digital and print channels.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Design creatives for campaigns</li>
+            <li>Create social media graphics</li>
+            <li>Work on branding materials</li>
+            <li>Maintain visual consistency</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Canva</li>
+            <li>Photoshop</li>
+            <li>Illustrator</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Basic design sense</li>
+            <li>Creativity and aesthetic eye</li>
+            <li>Willingness to learn tools</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand design basics</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Create simple designs</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Improve creativity</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Build consistent branding</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–2 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 05 · Technical Track</div>
+          <h2>Data <span>Science</span></h2>
+          <p class="role-overview">Focuses on analyzing data to generate insights that support strategic decision-making. Real datasets, real analysis — not textbook exercises.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Work with real datasets</li>
+            <li>Perform structured analysis</li>
+            <li>Create data visualizations</li>
+            <li>Identify trends and patterns</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Python</li>
+            <li>Pandas</li>
+            <li>Excel / Google Sheets</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Basic math or programming</li>
+            <li>Interest in data</li>
+            <li>Analytical mindset</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand data basics</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Analyze datasets</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Visualize insights</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Build simple models</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 2–4 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 06 · Technical Track</div>
+          <h2>AI / <span>Machine Learning</span></h2>
+          <p class="role-overview">Focuses on building intelligent systems that can learn from data and make predictions. Work with real ML pipelines, not just tutorials.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Work on ML models</li>
+            <li>Prepare and clean datasets</li>
+            <li>Experiment with algorithms</li>
+            <li>Evaluate model performance</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Python</li>
+            <li>Scikit-learn</li>
+            <li>TensorFlow</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Basic programming knowledge</li>
+            <li>Interest in AI/ML</li>
+            <li>Logical and analytical thinking</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand ML basics</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Work with data</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Train models</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Evaluate results</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 2–4 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">SpacECE <span>Leadership Forge</span></div>
+      <div class="footer-tagline">Youth Leadership × Real-World Learning</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('programs')">Internship Programs</a>
+        <a href="#" onclick="showPage('nontech')">Non-Tech Track</a>
+        <a href="#" onclick="showPage('apply')">Apply Here</a>
+        <a href="#" onclick="showPage('contact')">Contact Us</a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copy">© 2026 SpacECE India Foundation. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: NON-TECH DETAILS
+══════════════════════════════════════════ -->
+<div id="page-nontech" class="page">
+  <div class="track-intro">
+    <div class="container">
+      <div class="section-label" style="color:var(--gold);">Non-Technical Track</div>
+      <h1>Lead Systems.<br>Create Impact.</h1>
+      <p>This is not about routine work. It's about understanding how organizations function — and improving them.</p>
+      <p>From marketing and content to HR and operations, you'll work on real challenges that require clarity, ownership, and decision-making.</p>
+      <p style="color:rgba(255,255,255,0.4);font-style:italic;margin-top:1rem;">You won't just assist. You'll take responsibility and drive outcomes.</p>
+    </div>
+  </div>
+
+  <section class="roles-section">
+    <div class="container">
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 01 · Non-Technical Track</div>
+          <h2>Content <span>Writing</span></h2>
+          <p class="role-overview">Focuses on creating structured, impactful, and purpose-driven content across different formats. You will work on real content used in websites, reports, and communication material — not filler content.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Write blogs, website pages, and reports</li>
+            <li>Structure information clearly</li>
+            <li>Maintain tone and clarity standards</li>
+            <li>Improve and edit existing content</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Google Docs</li>
+            <li>Grammarly</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Students or freshers welcome</li>
+            <li>Basic writing skills</li>
+            <li>Ability to think clearly and structure ideas</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand audience and content type</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Create structured drafts</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Improve clarity and readability</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Deliver polished content</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 02 · Non-Technical Track</div>
+          <h2>Digital <span>Marketing</span></h2>
+          <p class="role-overview">Focuses on building online presence and driving growth through digital platforms using strategy and data. You will plan, execute, and measure — not just execute instructions.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Work on SEO and content strategy</li>
+            <li>Manage marketing campaigns</li>
+            <li>Analyze performance metrics</li>
+            <li>Improve reach and engagement</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Google Analytics</li>
+            <li>Canva</li>
+            <li>SEO tools (Semrush, etc.)</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Basic understanding of social media</li>
+            <li>Interest in marketing and growth</li>
+            <li>Analytical mindset</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand audience and platforms</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Execute campaigns</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Analyze performance</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Optimize strategy</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 03 · Non-Technical Track</div>
+          <h2>HR / <span>Management</span></h2>
+          <p class="role-overview">Focuses on managing people, hiring systems, and improving organizational processes. You will build workflows, not just fill spreadsheets.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Work on recruitment and onboarding</li>
+            <li>Manage team coordination</li>
+            <li>Improve internal processes</li>
+            <li>Create structured workflows</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Excel / Google Sheets</li>
+            <li>Google Forms</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Good communication skills</li>
+            <li>Interest in management and HR</li>
+            <li>Ability to coordinate tasks effectively</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand hiring and processes</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Execute recruitment tasks</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Improve systems</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Present impact</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 04 · Non-Technical Track</div>
+          <h2>Social Media <span>Handling</span></h2>
+          <p class="role-overview">Focuses on managing and growing social media platforms through content and engagement. Strategy, consistency, and analytics — not just posting.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Create and schedule posts</li>
+            <li>Engage actively with audience</li>
+            <li>Track and analyze performance</li>
+            <li>Maintain brand consistency</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Instagram / LinkedIn</li>
+            <li>Canva</li>
+            <li>Scheduling and analytics tools</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Familiar with social media platforms</li>
+            <li>Creative thinking</li>
+            <li>Consistency and reliability</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand platform dynamics</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Create content</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Analyze engagement</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Optimize strategy</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 05 · Non-Technical Track</div>
+          <h2>Business <span>Development</span></h2>
+          <p class="role-overview">Focuses on identifying growth opportunities, building partnerships, and expanding reach. You will think like a strategist and act like an entrepreneur.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Research leads and markets</li>
+            <li>Assist in outreach campaigns</li>
+            <li>Support growth strategies</li>
+            <li>Analyze new opportunities</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Excel / Google Sheets</li>
+            <li>LinkedIn</li>
+            <li>Email outreach tools</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Good communication skills</li>
+            <li>Analytical thinking</li>
+            <li>Interest in business growth</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand the market</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Identify opportunities</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Execute outreach</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Measure results</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+      <div class="role-block">
+        <div class="role-block-header">
+          <div class="role-num">Role 06 · Non-Technical Track</div>
+          <h2>Project <span>Management</span></h2>
+          <p class="role-overview">Focuses on managing workflows, tracking progress, and improving efficiency across projects. You'll bring order to complexity and ensure teams deliver on time.</p>
+        </div>
+        <div class="role-col">
+          <h4>What you will do</h4>
+          <ul>
+            <li>Track tasks and deadlines</li>
+            <li>Coordinate across teams</li>
+            <li>Improve workflows and processes</li>
+            <li>Maintain reports and documentation</li>
+          </ul>
+        </div>
+        <div class="role-col">
+          <h4>Tools & Technologies</h4>
+          <ul>
+            <li>Excel</li>
+            <li>Notion / Trello</li>
+            <li>Google Docs</li>
+          </ul>
+          <h4 style="margin-top:1.25rem;">Eligibility</h4>
+          <ul>
+            <li>Organized and structured mindset</li>
+            <li>Attention to detail</li>
+            <li>Ability to coordinate people</li>
+          </ul>
+        </div>
+        <div class="learning-path">
+          <div class="lp-stage"><div class="lp-stage-num">Stage 1</div><p>Understand workflows</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 2</div><p>Track execution</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 3</div><p>Identify inefficiencies</p></div>
+          <div class="lp-stage"><div class="lp-stage-num">Stage 4</div><p>Improve systems</p></div>
+        </div>
+        <div class="apply-bar">
+          <div class="duration-info"><strong>Duration:</strong> Short-term 1–3 months · Mid-term 6–12 months</div>
+          <a href="#" class="btn-sm" onclick="showPage('apply')">Apply for this role →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">SpacECE <span>Leadership Forge</span></div>
+      <div class="footer-tagline">Youth Leadership × Real-World Learning</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('programs')">Internship Programs</a>
+        <a href="#" onclick="showPage('tech')">Tech Track</a>
+        <a href="#" onclick="showPage('apply')">Apply Here</a>
+        <a href="#" onclick="showPage('contact')">Contact Us</a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copy">© 2026 SpacECE India Foundation. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: APPLY HERE
+══════════════════════════════════════════ -->
+<div id="page-apply" class="page">
+  <div class="apply-hero">
+    <div class="apply-hero-inner">
+      <div class="hero-tag" style="margin-bottom:1.5rem;">Applications Open</div>
+      <h1>Ready to Prove<br><em>Yourself?</em></h1>
+      <p class="sub">Most people apply. Few take ownership.</p>
+      <p class="sub">If you're serious about growth, this is where it begins.</p>
+      <p class="note">Take your time. Your responses matter.</p>
+      <a href="https://www.spacece.co/join-us/spacece-internship" class="btn-primary" target="_blank">Apply Now →</a>
+    </div>
+  </div>
+
+  <section class="process-steps">
+    <div class="container">
+      <div class="section-label">Selection Process</div>
+      <h2 class="section-title">Simple. Straightforward. Serious.</h2>
+      <p class="section-intro">Our intern recruitment process is designed to find candidates who are genuinely motivated — not just resume collectors.</p>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4>Fill Application Form</h4>
+          <p>Apply by clicking the button above. Share your CV and express your intent clearly. First impressions begin here.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4>Personal Interview</h4>
+          <p>Our recruitment team will connect with you immediately for further discussion about your goals and suitability.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4>Project Detailing Exercise</h4>
+          <p>You will be expected to detail a project implementation plan — showing us how you think, not just what you know.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h4>HR Onboarding</h4>
+          <p>Selected candidates go through a structured HR onboarding process and are officially welcomed into the Forge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--cream); padding:5rem 2rem;">
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Common Questions</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;">
+        <div class="what-card">
+          <h4>Is it a paid internship?</h4>
+          <p>Yes. This is a paid internship after 3 months. Candidates work as unpaid interns for the first 3 months, then the remaining period is paid. For sales teams, it is an incentive-based paid internship from Day 1.</p>
+        </div>
+        <div class="what-card">
+          <h4>Do you offer PPO?</h4>
+          <p>Yes. We offer Pre-Placement Offers to our interns after a due selection process. Packages are offered based on performance, skill sets, position, and market standards.</p>
+        </div>
+        <div class="what-card">
+          <h4>What are the working hours?</h4>
+          <p>We believe in flexible hours — you are not expected to log in at a fixed time. But you will be expected to complete daily assigned tasks and attend official meetings.</p>
+        </div>
+        <div class="what-card">
+          <h4>Will I get a Letter of Recommendation?</h4>
+          <p>A LoR is not for everyone. You receive it only in exceptional cases when you perform beyond expectations and achieve significant milestones during the internship.</p>
+        </div>
+        <div class="what-card">
+          <h4>How many hours per day?</h4>
+          <p>You will be assigned daily tasks and completion of those tasks is what matters. You are assessed by output and quality, not by the number of hours clocked.</p>
+        </div>
+        <div class="what-card">
+          <h4>Is it fully remote?</h4>
+          <p>Yes. All internships are organized in a virtual working mode. You will need a personal laptop, reliable internet access, and a dedicated working setup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">SpacECE <span>Leadership Forge</span></div>
+      <div class="footer-tagline">Youth Leadership × Real-World Learning · Helping students become problem solvers, change agents, and informed professionals.</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('programs')">Internship Programs</a>
+        <a href="#" onclick="showPage('tech')">Tech</a>
+        <a href="#" onclick="showPage('nontech')">Non-Tech</a>
+        <a href="#" onclick="showPage('resources')">Learning Resources</a>
+        <a href="#" onclick="showPage('contact')">Contact Us</a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copy">© 2026 SpacECE India Foundation. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: LEARNING RESOURCES
+══════════════════════════════════════════ -->
+<div id="page-resources" class="page">
+  <div class="page-hero">
+    <div class="section-label" style="color:var(--gold);">Self-Guided Learning</div>
+    <h1>Start Learning Before<br>You Start Working</h1>
+    <p>We don't expect you to know everything. But we expect you to be ready to learn, explore, and take initiative. These resources are curated starting points — not mandatory curriculum.</p>
+  </div>
+
+  <section class="resources-section">
+    <div class="container">
+      <div class="section-label">Resource Library</div>
+      <h2 class="section-title">Curated by Role, Built for Growth</h2>
+      <p class="section-intro">You are not expected to complete everything. You are expected to start somewhere and stay consistent.</p>
+
+      <div class="resources-grid">
+
+        <div class="resource-card web">
+          <div class="resource-icon" style="background:#e6f1fb;">🌐</div>
+          <h3>Web Development</h3>
+          <p class="desc">Learn how to build websites and web applications from scratch, including frontend and basic backend concepts. Covers everything from structure to interactivity.</p>
+          <div class="resource-list">
+            <h5>YouTube Playlists</h5>
+            <ul>
+              <li>HTML, CSS, JavaScript full course</li>
+              <li>React basics for beginners</li>
+            </ul>
+            <h5>Free Courses</h5>
+            <ul>
+              <li>FreeCodeCamp</li>
+              <li>W3Schools</li>
+            </ul>
+            <h5>Documentation</h5>
+            <ul>
+              <li>MDN Web Docs</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="resource-card design">
+          <div class="resource-icon" style="background:#faeeda;">🎨</div>
+          <h3>UI/UX Design</h3>
+          <p class="desc">Understand how to create visually appealing and user-friendly interfaces for web and mobile applications. Learn design thinking, not just tools.</p>
+          <div class="resource-list">
+            <h5>YouTube</h5>
+            <ul>
+              <li>Figma tutorials (beginner to advanced)</li>
+              <li>UI/UX basics and principles</li>
+            </ul>
+            <h5>Free Tools</h5>
+            <ul>
+              <li>Canva (quick mockups)</li>
+              <li>Figma (professional design)</li>
+            </ul>
+            <h5>Learning Topics</h5>
+            <ul>
+              <li>Wireframing</li>
+              <li>Color theory</li>
+              <li>Layout and grid systems</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="resource-card marketing">
+          <div class="resource-icon" style="background:#f0e8e2;">📣</div>
+          <h3>Digital Marketing</h3>
+          <p class="desc">Learn how to grow products and services using digital platforms, content, and data-driven strategies. Covers SEO, campaigns, and analytics.</p>
+          <div class="resource-list">
+            <h5>YouTube</h5>
+            <ul>
+              <li>SEO basics and on-page optimization</li>
+              <li>Digital marketing complete course</li>
+            </ul>
+            <h5>Tools</h5>
+            <ul>
+              <li>Google Analytics</li>
+              <li>Canva for social content</li>
+            </ul>
+            <h5>Topics</h5>
+            <ul>
+              <li>Social media strategy</li>
+              <li>Content marketing funnel</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="resource-card data">
+          <div class="resource-icon" style="background:#eaf3de;">📊</div>
+          <h3>Python & Data Science</h3>
+          <p class="desc">Build a strong foundation in programming and learn how to work with data and basic AI concepts. From syntax to machine learning pipelines.</p>
+          <div class="resource-list">
+            <h5>YouTube</h5>
+            <ul>
+              <li>Python basics for beginners</li>
+              <li>Data science with Python tutorials</li>
+            </ul>
+            <h5>Platforms</h5>
+            <ul>
+              <li>Kaggle (datasets + competitions)</li>
+              <li>FreeCodeCamp</li>
+            </ul>
+            <h5>Topics</h5>
+            <ul>
+              <li>Python programming</li>
+              <li>Data analysis with Pandas</li>
+              <li>Machine learning basics</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="resource-quote">
+        <blockquote>"These resources are not mandatory. They are starting points. What matters is how you use them."</blockquote>
+        <cite>— SpacECE Leadership Forge</cite>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">SpacECE <span>Leadership Forge</span></div>
+      <div class="footer-tagline">Youth Leadership × Real-World Learning · Helping students become problem solvers, change agents, and informed professionals.</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('programs')">Internship Programs</a>
+        <a href="#" onclick="showPage('tech')">Tech</a>
+        <a href="#" onclick="showPage('nontech')">Non-Tech</a>
+        <a href="#" onclick="showPage('apply')">Apply Here</a>
+        <a href="#" onclick="showPage('contact')">Contact Us</a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copy">© 2026 SpacECE India Foundation. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: CONTACT US
+══════════════════════════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="page-hero">
+    <div class="section-label" style="color:var(--gold);">Reach Out</div>
+    <h1>Get in Touch</h1>
+    <p>Have questions about the internship or application process? We're here to help. Drop us a message and our team will get back to you.</p>
+  </div>
+
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info-block">
+          <h3>SpacECE India Foundation</h3>
+          <div class="contact-item">
+            <div class="contact-item-icon">🏢</div>
+            <div class="contact-item-text">
+              <h5>Organisation</h5>
+              <p>SpacECE India Foundation</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text">
+              <h5>Address</h5>
+              <p>Dhayari, Pune, Maharashtra, India</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div class="contact-item-text">
+              <h5>Email</h5>
+              <p>contactus@spacece.co</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📞</div>
+            <div class="contact-item-text">
+              <h5>Phone</h5>
+              <p>+91 9372744039</p>
+            </div>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link">in LinkedIn</a>
+            <a href="#" class="social-link">📸 Instagram</a>
+          </div>
+        </div>
+
+        <div class="contact-form-block">
+          <h3>Send a Message</h3>
+          <div class="form-row">
+            <label>Full Name</label>
+            <input type="text" placeholder="Your full name">
+          </div>
+          <div class="form-row">
+            <label>Email Address</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-row">
+            <label>Area of Interest</label>
+            <select>
+              <option>Select a role...</option>
+              <option>Web Development</option>
+              <option>App Development</option>
+              <option>UI/UX Design</option>
+              <option>Graphic Design</option>
+              <option>Data Science / AI</option>
+              <option>Digital Marketing</option>
+              <option>Content Writing</option>
+              <option>HR / Management</option>
+              <option>Business Development</option>
+              <option>Project Management</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Your Message</label>
+            <textarea placeholder="Tell us about yourself and your interest in the program..."></textarea>
+          </div>
+          <button class="form-submit">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">SpacECE <span>Leadership Forge</span></div>
+      <div class="footer-tagline">Youth Leadership × Real-World Learning · Helping students become problem solvers, change agents, and informed professionals.</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('programs')">Internship Programs</a>
+        <a href="#" onclick="showPage('tech')">Tech</a>
+        <a href="#" onclick="showPage('nontech')">Non-Tech</a>
+        <a href="#" onclick="showPage('apply')">Apply Here</a>
+        <a href="#" onclick="showPage('resources')">Learning Resources</a>
+      </div>
+      <hr class="footer-divider">
+      <div class="footer-copy">© 2026 SpacECE India Foundation. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const pages = ['home','programs','tech','nontech','apply','resources','contact'];
+const navMap = {
+  home:'nav-home', programs:'nav-programs',
+  tech:'nav-details', nontech:'nav-details',
+  apply:'nav-apply', resources:'nav-resources', contact:'nav-contact'
+};
+
+function showPage(id) {
+  pages.forEach(p => {
+    const el = document.getElementById('page-'+p);
+    if(el) el.classList.remove('active');
+  });
+  const target = document.getElementById('page-'+id);
+  if(target) { target.classList.add('active'); window.scrollTo(0,0); }
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const activeNav = document.getElementById(navMap[id]);
+  if(activeNav) activeNav.classList.add('active');
+  return false;
+}
+
+function filterRoles(track, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.prog-card').forEach(card => {
+    if(track === 'all' || card.dataset.track === track) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+document.querySelector('.form-submit').addEventListener('click', function() {
+  this.textContent = 'Message Sent! ✓';
+  this.style.background = '#1a6b6b';
+  setTimeout(() => {
+    this.textContent = 'Send Message →';
+    this.style.background = '';
+  }, 3000);
+});
+</script>
+</body>
+</html>
